@@ -9,7 +9,7 @@ COPY --chown=quarkus:quarkus pom.xml .
 COPY --chown=quarkus:quarkus ./mvnw .
 COPY --chown=quarkus:quarkus .mvn ./.mvn
 COPY --chown=quarkus:quarkus src ./src
-USER quarkus
+USER root
 
 RUN \
   --mount=type=cache,target=/code/quarkus-gs/m2 \
