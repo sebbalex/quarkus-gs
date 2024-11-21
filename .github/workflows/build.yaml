@@ -35,17 +35,22 @@ jobs:
 
       - name: Cache Docker layers
         uses: actions/cache@v4
+        id: cache
         with:
-          path: ~/.m2
+          path: gha-mvn-cache
           key: buildx-${{ hashFiles('**/pom.xml') }}
           restore-keys: |
             buildx-m2
 
       - name: inject buildx-qgs into docker
-        uses: reproducible-containers/buildkit-cache-dance@5b6db76d1da5c8b307d5d2e0706d266521b710de # v2.1.4
+        uses: reproducible-containers/buildkit-cache-dance@5b6db76d1da5c8b307d5d2e0706d266521b710de # v3.1.2
         with:
-          cache-source: ~/.m2
-          cache-target: ~/.m2
+          cache-map: |
+            {
+              "gha-mvn-cache": "~/.m2",
+              "gha-mvn-cache": "/root/.m2"
+            }
+          skip-extraction: ${{ steps.cache.outputs.cache-hit }}
 
       - name: Build and push
         uses: docker/build-push-action@v6
