@@ -39,10 +39,10 @@ jobs:
           path: ~/.m2
           key: buildx-${{ hashFiles('**/pom.xml') }}
           restore-keys: |
-            buildx-${{ hashFiles('**/pom.xml') }}
+            buildx-m2
 
       - name: inject buildx-qgs into docker
-        uses: reproducible-containers/buildkit-cache-dance@4b2444fec0c0fb9dbf175a96c094720a692ef810 # v2.1.4
+        uses: reproducible-containers/buildkit-cache-dance@5b6db76d1da5c8b307d5d2e0706d266521b710de # v2.1.4
         with:
           cache-source: ~/.m2
           cache-target: ~/.m2
