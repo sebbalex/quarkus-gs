@@ -47,8 +47,7 @@ jobs:
         with:
           cache-map: |
             {
-              "gha-mvn-cache": "~/.m2",
-              "gha-mvn-cache": "/root/.m2"
+              "gha-mvn-cache": "/m2"
             }
           skip-extraction: ${{ steps.cache.outputs.cache-hit }}
 
