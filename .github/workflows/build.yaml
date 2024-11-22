@@ -49,7 +49,7 @@ jobs:
             {
               "gha-mvn-cache": "/code/quarkus-gs/m2"
             }
-          #skip-extraction: ${{ steps.cache.outputs.cache-hit }}
+          skip-extraction: ${{ steps.cache.outputs.cache-hit }}
 
       - name: Build and push
         uses: docker/build-push-action@v6
