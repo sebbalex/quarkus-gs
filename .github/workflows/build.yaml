@@ -22,17 +22,18 @@ jobs:
         uses: actions/cache@v4
         id: cache
         with:
-          path: /tmp/.buildx-cache
-          key: buildx-${{ hashFiles('**/pom.xml') }}
+          path: build-cache
+          key: ${{ runner.os }}-buildx-${{ hashFiles('**/pom.xml') }}
           restore-keys: |
-            buildx-m2
+            ${{ runner.os }}-buildx-${{ hashFiles('**/pom.xml') }}
+            ${{ runner.os }}-buildx-m2
 
       - name: inject buildx-qgs into docker
         uses: reproducible-containers/buildkit-cache-dance@5b6db76d1da5c8b307d5d2e0706d266521b710de # v3.1.2
         with:
           cache-map: |
             {
-              "/tmp/.buildx-cache": {"target": "/tmp/.buildx-cache", "id": "1"}
+              "build-cache": {"target": "/tmp/.buildx-cache", "id": "1"}
             }
           skip-extraction: false #${{ steps.cache.outputs.cache-hit }}
 
@@ -42,17 +43,17 @@ jobs:
           push: false
           tags: sebbalex/quarkus-gs:latest
           file: Dockerfile
-          # cache-from: type=gha
-          # cache-to: type=gha,mode=max
-          cache-from: type=local,src=/tmp/.buildx-cache
-          cache-to: type=local,dest=/tmp/.buildx-cache-new,mode=max
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          # cache-from: type=local,src=/tmp/.buildx-cache
+          # cache-to: type=local,dest=/tmp/.buildx-cache-new,mode=max
 
-      - # Temp fix
-        # https://github.com/docker/build-push-action/issues/252
-        # https://github.com/moby/buildkit/issues/1896
-        name: Move cache
-        run: |
-          ls -la /tmp/.buildx-cache
-          ls -la /tmp/.buildx-cache-new
-          rm -rf /tmp/.buildx-cache
-          mv /tmp/.buildx-cache-new /tmp/.buildx-cache
+      # - # Temp fix
+      #   # https://github.com/docker/build-push-action/issues/252
+      #   # https://github.com/moby/buildkit/issues/1896
+      #   name: Move cache
+      #   run: |
+      #     ls -la /tmp/.buildx-cache
+      #     ls -la /tmp/.buildx-cache-new
+      #     rm -rf /tmp/.buildx-cache
+      #     mv /tmp/.buildx-cache-new /tmp/.buildx-cache
