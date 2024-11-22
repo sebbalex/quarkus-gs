@@ -22,7 +22,7 @@ jobs:
         uses: actions/cache@6849a6489940f00c2f30c0fb92c6274307ccb58a # v4.1.2
         id: cache
         with:
-          path: build-cachee
+          path: build-cacheee
           key: buildx-${{ hashFiles('**/pom.xml') }}
           restore-keys: |
             buildx-
@@ -31,11 +31,11 @@ jobs:
         # uses: reproducible-containers/buildkit-cache-dance@v2.1.4
         uses: reproducible-containers/buildkit-cache-dance@5b6db76d1da5c8b307d5d2e0706d266521b710de # v3.1.2
         with:
-          # cache-source: build-cachee
-          # cache-target: /tmp/.buildx-cachee
+          # cache-source: build-cacheee
+          # cache-target: /tmp/.buildx-cacheee
           cache-map: |
             {
-              "build-cachee": "/tmp/.buildx-cachee"
+              "build-cacheee": "/tmp/.buildx-cacheee"
             }
           skip-extraction: ${{ steps.cache.outputs.cache-hit }}
 
