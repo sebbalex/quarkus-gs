@@ -23,9 +23,9 @@ jobs:
         id: cache
         with:
           path: build-cache
-          key: buildx-${{ hashFiles('**/pom.xml') }}
+          key: buildx-${{ hashFiles('**/*') }}
           restore-keys: |
-           buildx-m2
+            buildx-m2
 
       - name: inject buildx-qgs into docker
         uses: reproducible-containers/buildkit-cache-dance@v2.1.4
