@@ -53,5 +53,6 @@ jobs:
         name: Move cache
         run: |
           ls -la /tmp/.buildx-cache
+          ls -la /tmp/.buildx-cache-new
           rm -rf /tmp/.buildx-cache
           mv /tmp/.buildx-cache-new /tmp/.buildx-cache
