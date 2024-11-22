@@ -29,12 +29,15 @@ jobs:
             ${{ runner.os }}-buildx-m2
 
       - name: inject buildx-qgs into docker
-        uses: reproducible-containers/buildkit-cache-dance@5b6db76d1da5c8b307d5d2e0706d266521b710de # v3.1.2
+        uses: reproducible-containers/buildkit-cache-dance@v2.1.4
+        #uses: reproducible-containers/buildkit-cache-dance@5b6db76d1da5c8b307d5d2e0706d266521b710de # v3.1.2
         with:
-          cache-map: |
-            {
-              "build-cache": {"target": "/tmp/.buildx-cache", "id": "1"}
-            }
+          cache-source: build-cache
+          cache-target: /tmp/.buildx-cache
+          # cache-map: |
+          #   {
+          #     "build-cache": {"target": "/tmp/.buildx-cache", "id": "1"}
+          #   }
           skip-extraction: false #${{ steps.cache.outputs.cache-hit }}
 
       - name: Build and push
