@@ -13,21 +13,11 @@ USER root
 
 RUN \
   --mount=type=cache,target=/tmp/.buildx-cache,sharing=locked \
-  ls -la /tmp/.buildx-cache
-
-RUN \
-  --mount=type=cache,target=/tmp/.buildx-cache,sharing=locked \
   ["./mvnw", "verify", "clean", "-Dmaven.repo.local=/tmp/.buildx-cache", "--fail-never"]
 
 RUN \
   --mount=type=cache,target=/tmp/.buildx-cache,sharing=locked \
   ./mvnw -f pom.xml -B package -Dmaven.repo.local=/tmp/.buildx-cache -Dmaven.test.skip=true
-
-
-RUN \
-  --mount=type=cache,target=/tmp/.buildx-cache,sharing=locked \
-  ls -la /tmp/.buildx-cache
-
 
 FROM registry.access.redhat.com/ubi8/openjdk-21-runtime:1.20-2@sha256:6a3242526aebd99245eee76feb55c0b9a10325cddfc9530b24c096064a5ed81e
 COPY --from=build /code/quarkus-gs/target/quarkus-app/lib/ /deployments/lib/
