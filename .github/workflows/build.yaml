@@ -38,7 +38,7 @@ jobs:
           #   {
           #     "build-cache": {"target": "/tmp/.buildx-cache", "id": "1"}
           #   }
-          skip-extraction: false #${{ steps.cache.outputs.cache-hit }}
+          skip-extraction: ${{ steps.cache.outputs.cache-hit }}
 
       - name: Build and push
         uses: docker/build-push-action@v6
