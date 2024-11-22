@@ -10,7 +10,7 @@ COPY --chown=quarkus:quarkus ./mvnw .
 COPY --chown=quarkus:quarkus .mvn ./.mvn
 COPY --chown=quarkus:quarkus src ./src
 
-USER root
+USER quarkus
 
 RUN \
   --mount=type=cache,uid=185,gid=185,target=/tmp/.buildx-cacheee,sharing=locked \
