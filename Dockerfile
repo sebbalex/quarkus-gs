@@ -12,6 +12,7 @@ COPY --chown=quarkus:quarkus src ./src
 USER root
 
 RUN \
+  --mount=type=cache,target=/tmp/.buildx-cache,sharing=locked \
   ls -la /tmp/.buildx-cache
 
 RUN \
@@ -24,6 +25,7 @@ RUN \
 
 
 RUN \
+  --mount=type=cache,target=/tmp/.buildx-cache,sharing=locked \
   ls -la /tmp/.buildx-cache
 
 
