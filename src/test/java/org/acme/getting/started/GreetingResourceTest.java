@@ -18,7 +18,7 @@ public class GreetingResourceTest {
                 .when().get("/hello")
                 .then()
                 .statusCode(200)
-                .body(is("helloooo"));
+                .body(is("hello"));
     }
 
     @Test
