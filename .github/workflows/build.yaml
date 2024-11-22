@@ -23,7 +23,7 @@ jobs:
         id: cache
         with:
           path: build-cache
-          key: buildx-${{ hashFiles('**/*') }}
+          key: buildx-${{ hashFiles('**/pom.xml') }}
           restore-keys: |
             buildx-
 
