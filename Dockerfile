@@ -13,6 +13,10 @@ USER root
 
 RUN \
   --mount=type=cache,target=/tmp/.buildx-cache,sharing=locked \
+  ls -la /tmp/.buildx-cache
+
+RUN \
+  --mount=type=cache,target=/tmp/.buildx-cache,sharing=locked \
   ["./mvnw", "verify", "clean", "-Dmaven.repo.local=/tmp/.buildx-cache", "--fail-never"]
 
 RUN \
