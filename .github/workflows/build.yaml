@@ -25,7 +25,7 @@ jobs:
           path: build-cache
           key: buildx-${{ hashFiles('**/*') }}
           restore-keys: |
-            buildx-m2
+            buildx-
 
       - name: inject buildx-qgs into docker
         uses: reproducible-containers/buildkit-cache-dance@v2.1.4
