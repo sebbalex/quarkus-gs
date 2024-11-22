@@ -9,10 +9,11 @@ COPY --chown=quarkus:quarkus pom.xml .
 COPY --chown=quarkus:quarkus ./mvnw .
 COPY --chown=quarkus:quarkus .mvn ./.mvn
 COPY --chown=quarkus:quarkus src ./src
-USER quarkus
 
 # create cache dir if not exist
-RUN mkdir -p /tmp/.buildx-cachee
+RUN chown -R quarkus:quarkus /tmp/.buildx-cachee
+
+USER quarkus
 
 RUN \
   --mount=type=cache,target=/tmp/.buildx-cachee,sharing=locked \
