@@ -15,23 +15,17 @@ jobs:
     steps:
       - uses: actions/checkout@a5ac7e51b41094c92402da3b24376905380afc29
 
-      # - uses: actions/cache@6849a6489940f00c2f30c0fb92c6274307ccb58a
-      #   with:
-      #     path: |
-      #       ~/.m2/repository
-      #       /root/.m2/repository
-      #     key: cache-${{ hashFiles('**/pom.xml') }}
-
-      # - name: Build, tag
-      #   id: build-image
-      #   working-directory: src/
-      #   run: |
-      #     docker build -f ./quarkus-gs/Dockerfile -t sebbalex/quarkus-gs:latest \
-      #     docker push sebbalex/quarkus-gs:latest
-      #     echo "image=sebbalex/quarkus-gs:latest" >> $GITHUB_OUTPUT
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
+
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: test
 
       - name: Cache Docker layers
         uses: actions/cache@v4
@@ -47,9 +41,9 @@ jobs:
         with:
           cache-map: |
             {
-              "gha-mvn-cache": "/code/quarkus-gs/m2"
+              "gha-mvn-cache": {"target": "/code/quarkus-gs/m2", "id": "1"}
             }
-          skip-extraction: ${{ steps.cache.outputs.cache-hit }}
+          skip-extraction: false #${{ steps.cache.outputs.cache-hit }}
 
       - name: Build and push
         uses: docker/build-push-action@v6
