@@ -24,9 +24,9 @@ jobs:
         with:
           path: build-cache
           key: buildx-${{ hashFiles('**/pom.xml') }}
-          restore-keys: |
-            buildx-${{ hashFiles('**/pom.xml') }}
-            buildx-m2
+          # restore-keys: |
+          #   buildx-${{ hashFiles('**/pom.xml') }}
+          #   buildx-m2
 
       - name: inject buildx-qgs into docker
         uses: reproducible-containers/buildkit-cache-dance@v2.1.4
@@ -38,7 +38,7 @@ jobs:
           #   {
           #     "build-cache": {"target": "/tmp/.buildx-cache", "id": "1"}
           #   }
-          skip-extraction: ${{ steps.cache.outputs.cache-hit }}
+          skip-extraction: false #${{ steps.cache.outputs.cache-hit }}
 
       - name: Build and push
         uses: docker/build-push-action@v6
