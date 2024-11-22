@@ -35,7 +35,7 @@ jobs:
           # cache-target: /tmp/.buildx-cacheee
           cache-map: |
             {
-              "build-cacheee": "/tmp/.buildx-cacheee"
+              "build-cacheee": {"target": "/tmp/.buildx-cacheee", "id": "1"}
             }
           skip-extraction: ${{ steps.cache.outputs.cache-hit }}
 
