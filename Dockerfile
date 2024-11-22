@@ -11,7 +11,9 @@ COPY --chown=quarkus:quarkus .mvn ./.mvn
 COPY --chown=quarkus:quarkus src ./src
 
 # create cache dir if not exist
-RUN chown -R quarkus:quarkus /tmp/.buildx-cachee
+RUN \
+  mkdir -p /tmp/.buildx-cachee \
+  chown -R quarkus:quarkus /tmp/.buildx-cachee
 
 USER quarkus
 
