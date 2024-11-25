@@ -22,22 +22,22 @@ jobs:
         uses: actions/cache@6849a6489940f00c2f30c0fb92c6274307ccb58a # v4.1.2
         id: cache
         with:
-          path: build-cacheboh
+          path: build-cachebohdue
           key: buildx-${{ hashFiles('**/pom.xml') }}
           restore-keys: |
             buildx-
 
       - name: inject buildx-qgs into docker
-        uses: reproducible-containers/buildkit-cache-dance@v2.1.4
-        # uses: reproducible-containers/buildkit-cache-dance@5b6db76d1da5c8b307d5d2e0706d266521b710de # v3.1.2
+        # uses: reproducible-containers/buildkit-cache-dance@v2.1.4
+        uses: reproducible-containers/buildkit-cache-dance@5b6db76d1da5c8b307d5d2e0706d266521b710de # v3.1.2
         with:
-          cache-source: build-cacheboh
-          cache-target: /tmp/.buildx-cacheboh
-          # cache-map: |
-          #   {
-          #     "build-cache": {"target": "/tmp/.buildx-cacheboh", "id": "1"}
-          #   }
-          skip-extraction: false #${{ steps.cache.outputs.cache-hit }}
+          # cache-source: build-cachebohdue
+          # cache-target: /tmp/.buildx-cachebohdue
+          cache-map: |
+            {
+              "build-cache": {"target": "/tmp/.buildx-cachebohdue", "id": "cache"}
+            }
+          skip-extraction: ${{ steps.cache.outputs.cache-hit }}
 
       - name: Build and push
         uses: docker/build-push-action@4f58ea79222b3b9dc2c8bbdd6debcef730109a75 # v6.9.0
