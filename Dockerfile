@@ -10,26 +10,22 @@ COPY --chown=quarkus:quarkus ./mvnw .
 COPY --chown=quarkus:quarkus .mvn ./.mvn
 COPY --chown=quarkus:quarkus src ./src
 
-# create cache dir if not exist and fix permissions
-RUN mkdir -p /tmp/.buildx-cache
-RUN chown -R quarkus:quarkus /tmp/.buildx-cache
-
 USER quarkus
 
 RUN \
-  --mount=type=cache,target=/tmp/.buildx-cache,sharing=locked \
-  ls -la /tmp/.buildx-cache
+  --mount=type=cache,target=/tmp/.buildx-cacheboh,sharing=locked,uid=1001,gid=1001 \
+  ls -la /tmp/.buildx-cacheboh
 
 RUN \
-  --mount=type=cache,target=/tmp/.buildx-cache,sharing=locked \
-  ["./mvnw", "verify", "clean", "-Dmaven.repo.local=/tmp/.buildx-cache", "--fail-never"]
+  --mount=type=cache,target=/tmp/.buildx-cacheboh,sharing=locked,uid=1001,gid=1001 \
+  ["./mvnw", "verify", "clean", "-Dmaven.repo.local=/tmp/.buildx-cacheboh", "--fail-never"]
 
 RUN \
-  --mount=type=cache,target=/tmp/.buildx-cache,sharing=locked \
-  ./mvnw -f pom.xml -B package -Dmaven.repo.local=/tmp/.buildx-cache -Dmaven.test.skip=true
+  --mount=type=cache,target=/tmp/.buildx-cacheboh,sharing=locked,uid=1001,gid=1001 \
+  ./mvnw -f pom.xml -B package -Dmaven.repo.local=/tmp/.buildx-cacheboh -Dmaven.test.skip=true
 RUN \
---mount=type=cache,target=/tmp/.buildx-cache,sharing=locked \
-ls -la /tmp/.buildx-cache
+--mount=type=cache,target=/tmp/.buildx-cacheboh,sharing=locked,uid=1001,gid=1001 \
+ls -la /tmp/.buildx-cacheboh
 
 FROM registry.access.redhat.com/ubi8/openjdk-21-runtime:1.20-2@sha256:6a3242526aebd99245eee76feb55c0b9a10325cddfc9530b24c096064a5ed81e
 COPY --from=build /code/quarkus-gs/target/quarkus-app/lib/ /deployments/lib/
