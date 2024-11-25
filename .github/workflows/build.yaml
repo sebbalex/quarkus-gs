@@ -35,7 +35,7 @@ jobs:
           # cache-target: /tmp/.buildx-cachebohtre
           cache-map: |
             {
-              "build-cache": {"target": "/tmp/.buildx-cachebohtre", "uid": "1001", "gid": "1001"}
+              "build-cachebohtre": {"target": "/tmp/.buildx-cachebohtre", "uid": "1001", "gid": "1001"}
             }
           skip-extraction: ${{ steps.cache.outputs.cache-hit }}
 
