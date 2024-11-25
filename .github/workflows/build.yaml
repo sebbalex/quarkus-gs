@@ -22,7 +22,7 @@ jobs:
         uses: actions/cache@6849a6489940f00c2f30c0fb92c6274307ccb58a # v4.1.2
         id: cache
         with:
-          path: build-cachebohtre
+          path: build-cache
           key: buildx-${{ hashFiles('**/pom.xml') }}
           restore-keys: |
             buildx-
@@ -31,11 +31,11 @@ jobs:
         # uses: reproducible-containers/buildkit-cache-dance@v2.1.4
         uses: reproducible-containers/buildkit-cache-dance@5b6db76d1da5c8b307d5d2e0706d266521b710de # v3.1.2
         with:
-          # cache-source: build-cachebohtre
-          # cache-target: /tmp/.buildx-cachebohtre
+          # cache-source: build-cache
+          # cache-target: /tmp/.build-cache
           cache-map: |
             {
-              "build-cachebohtre": {"target": "/tmp/.buildx-cachebohtre", "uid": "1001", "gid": "1001"}
+              "build-cache": {"target": "/tmp/.build-cache", "uid": "1001", "gid": "1001"}
             }
           skip-extraction: ${{ steps.cache.outputs.cache-hit }}
 
